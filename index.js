@@ -83,7 +83,7 @@ function loggable(struct){
     if(struct.pruned) return 'pruned';
     else if (typeof struct.children === 'undefined') return struct.value;
     else {
-        var result = {'$value':struct.value};
+        var result = {'$value':struct.value, 'zchildren':struct.children};
         for(var i = 0; i<struct.children.length; i++){
             result['c'+i] = (loggable(struct.children[i]));
         }
