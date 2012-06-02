@@ -8,7 +8,11 @@ function play(MinOrMax, struct){
     }else{
         console.log("MinOrMax must be either the string 'min' or the string 'max' (case sensitive).");
     }
-    return loggable(root);
+    if(typeof console.groupCollapsed === 'function'){
+        return groupLog(root);
+    } else {
+        return loggable(root);
+    }
 }
 
 //Main Algorithm
@@ -88,6 +92,18 @@ function loggable(struct){
             result['c'+i] = (loggable(struct.children[i]));
         }
         return result;
+    }
+}
+function groupLog(struct){
+    if(struct.pruned) console.log('pruned');
+    else if (typeof struct.children === 'undefined') console.log(struct.value);
+    else {
+        var result = {'$value':struct.value};
+        console.groupCollapsed(struct.value);
+        for(var i = 0; i<struct.children.length; i++){
+            groupLog(struct.children[i]);
+        }
+        console.groupEnd();
     }
 }
 
